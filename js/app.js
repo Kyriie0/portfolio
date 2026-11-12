@@ -155,10 +155,19 @@
     setTimeout(poser, 200);
   }
 
+  // Sur ordinateur : ouvre un nouveau message Gmail déjà adressé (nouvel onglet).
+  // Sur téléphone : ouvre l'appli mail du visiteur (Gmail, Mail…), plus pratique qu'une page web.
+  function lienEmail() {
+    const sujet = "Demande de projet";
+    if (!fin) return `mailto:${encodeURIComponent(SITE.email)}?subject=${encodeURIComponent(sujet)}`;
+    const p = new URLSearchParams({ view: "cm", fs: "1", to: SITE.email, su: sujet });
+    return echap(`https://mail.google.com/mail/?${p}`);
+  }
+
   function blocContact(avecId) {
     return `<section class="contact" ${avecId ? 'id="contact" aria-labelledby="t-contact"' : 'aria-label="Contact"'}>
       <h2 class="ct-intro" ${avecId ? 'id="t-contact"' : ""}>Un projet, une collab ? Écris-moi.</h2>
-      <a class="ct-email" href="mailto:${echap(SITE.email)}" aria-label="${echap(SITE.email)}"><span data-ajuste aria-hidden="true">${lettres(SITE.email)}</span></a>
+      <a class="ct-email" href="${lienEmail()}" ${fin ? 'target="_blank" rel="noopener"' : ""} aria-label="Écrire à ${echap(SITE.email)}"><span data-ajuste aria-hidden="true">${lettres(SITE.email)}</span></a>
       <div class="ct-actions">
         <button type="button" class="bouton aimant" data-copier>Copier l’adresse</button>
         <ul class="reseaux">${SITE.reseaux.map((r) => `<li><a href="${echap(r.url)}" target="_blank" rel="noopener">${echap(r.nom)}</a></li>`).join("")}</ul>
