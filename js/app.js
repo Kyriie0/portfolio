@@ -155,6 +155,106 @@
     setTimeout(poser, 200);
   }
 
+  /* ---------- Formulaire de demande ---------- */
+
+  function pastilles(nom, options, type) {
+    return `<div class="pastilles">${options
+      .map((o, i) => `<label class="pastille"><input type="${type}" name="${nom}" value="${echap(o)}" ${type === "radio" && i === options.length - 1 ? "" : ""}><span>${echap(o)}</span></label>`)
+      .join("")}</div>`;
+  }
+
+  function formulaire() {
+    return `<form class="demande" novalidate data-demande>
+      <div class="d-grille">
+        <label class="d-champ"><span>Prénom <em>*</em></span><input name="Prénom" autocomplete="given-name" required maxlength="80"></label>
+        <label class="d-champ"><span>Nom <em>*</em></span><input name="Nom" autocomplete="family-name" required maxlength="80"></label>
+        <label class="d-champ"><span>Email <em>*</em></span><input name="email" type="email" autocomplete="email" required maxlength="160" placeholder="pour que je puisse vous répondre"></label>
+        <label class="d-champ"><span>Marque, club ou projet</span><input name="Structure" autocomplete="organization" maxlength="120" placeholder="optionnel"></label>
+      </div>
+      <fieldset class="d-groupe" data-requis>
+        <legend>Type de demande <em>*</em> <small>plusieurs choix possibles</small></legend>
+        ${pastilles("Type de demande", SITE.typesDemande || [], "checkbox")}
+      </fieldset>
+      <label class="d-champ"><span>Votre demande <em>*</em></span><textarea name="Demande" required minlength="20" maxlength="4000" rows="5" placeholder="Expliquez votre projet : ce que vous voulez, pour quoi faire, où il sera diffusé…"></textarea></label>
+      <label class="d-champ"><span>Précisions</span><textarea name="Précisions" maxlength="3000" rows="3" placeholder="Couleurs, inspirations, formats, liens vers des exemples… (optionnel)"></textarea></label>
+      <div class="d-grille">
+        <fieldset class="d-groupe"><legend>Budget</legend>${pastilles("Budget", SITE.budgets || [], "radio")}</fieldset>
+        <fieldset class="d-groupe"><legend>Délai</legend>${pastilles("Délai", SITE.delais || [], "radio")}</fieldset>
+      </div>
+      <input type="text" name="_honey" class="d-piege" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="d-bas">
+        <button type="submit" class="bouton aimant">Envoyer la demande</button>
+        <p class="d-note">Vos informations servent uniquement à vous répondre.</p>
+      </div>
+      <p class="d-message" role="status" aria-live="polite"></p>
+    </form>`;
+  }
+
+  async function envoyerDemande(form) {
+    const message = $(".d-message", form);
+    const bouton = $("[type=submit]", form);
+    const dire = (texte, type) => { message.textContent = texte; message.className = `d-message ${type || ""}`; };
+    $$(".invalide", form).forEach((el) => el.classList.remove("invalide"));
+
+    // Vérification des champs obligatoires
+    const erreurs = [];
+    $$("[required]", form).forEach((el) => {
+      if (!el.checkValidity()) { el.closest(".d-champ").classList.add("invalide"); erreurs.push(el); }
+    });
+    const groupe = $("[data-requis]", form);
+    if (groupe && !$("input:checked", groupe)) { groupe.classList.add("invalide"); erreurs.push($("input", groupe)); }
+    if (erreurs.length) {
+      dire("Il manque des informations : complétez les champs en rouge.", "erreur");
+      erreurs[0].focus();
+      return;
+    }
+    if (form._honey.value) return; // robot
+
+    const d = new FormData(form);
+    const donnees = {};
+    for (const [k, v] of d.entries()) {
+      if (k === "_honey" || !String(v).trim()) continue;
+      donnees[k] = donnees[k] ? `${donnees[k]}, ${v}` : String(v).trim();
+    }
+    const nom = `${donnees["Prénom"]} ${donnees["Nom"]}`;
+    Object.assign(donnees, {
+      _subject: `Nouvelle demande de ${nom} (${donnees["Type de demande"]})`,
+      _replyto: donnees.email,
+      _template: "table",
+      _captcha: "false",
+    });
+
+    bouton.disabled = true;
+    bouton.textContent = "Envoi…";
+    dire("");
+    try {
+      const rep = await fetch(SITE.formulaire, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(donnees),
+      });
+      const r = await rep.json().catch(() => ({}));
+      if (!rep.ok || String(r.success) !== "true") throw new Error(r.message || "");
+      form.innerHTML = `<div class="d-merci"><p class="d-merci-titre">Merci ${echap(donnees["Prénom"])}, votre demande est envoyée.</p>
+        <p>Je vous réponds sous 48 heures à <strong>${echap(donnees.email)}</strong>. Pensez à vérifier vos spams.</p></div>`;
+    } catch {
+      bouton.disabled = false;
+      bouton.textContent = "Envoyer la demande";
+      dire(`L’envoi n’a pas fonctionné. Réessayez dans un instant, ou écrivez-moi directement à ${SITE.email}.`, "erreur");
+    }
+  }
+
+  document.addEventListener("submit", (e) => {
+    const form = e.target.closest("[data-demande]");
+    if (!form) return;
+    e.preventDefault();
+    envoyerDemande(form);
+  });
+  document.addEventListener("input", (e) => {
+    const z = e.target.closest && e.target.closest(".invalide");
+    if (z) z.classList.remove("invalide");
+  });
+
   // Sur ordinateur : ouvre un nouveau message Gmail déjà adressé (nouvel onglet).
   // Sur téléphone : ouvre l'appli mail du visiteur (Gmail, Mail…), plus pratique qu'une page web.
   function lienEmail() {
@@ -167,6 +267,8 @@
   function blocContact(avecId) {
     return `<section class="contact" ${avecId ? 'id="contact" aria-labelledby="t-contact"' : 'aria-label="Contact"'}>
       <h2 class="ct-intro" ${avecId ? 'id="t-contact"' : ""}>Un projet, une collab ? Écris-moi.</h2>
+      ${avecId && SITE.formulaire ? formulaire() : avecId ? "" : `<a class="bouton ct-demande" href="#/contact">Faire une demande de projet</a>`}
+      ${avecId && SITE.formulaire ? `<p class="ct-ou">Ou écris-moi directement :</p>` : ""}
       <a class="ct-email" href="${lienEmail()}" ${fin ? 'target="_blank" rel="noopener"' : ""} aria-label="Écrire à ${echap(SITE.email)}"><span data-ajuste aria-hidden="true">${lettres(SITE.email)}</span></a>
       <div class="ct-actions">
         <button type="button" class="bouton aimant" data-copier>Copier l’adresse</button>
