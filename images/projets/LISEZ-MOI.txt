@@ -1,0 +1,16 @@
+Range ici tes créas, un dossier par projet, avec le même nom que le "slug" dans js/contenu.js.
+
+Exemple :
+  images/projets/identite-artiste/cover.jpg
+  images/projets/identite-artiste/01.jpg
+  images/projets/identite-artiste/02.jpg
+
+Conseils :
+- Format JPG (ou WebP) pour les images, MP4 pour les vidéos.
+- 2400 px de large maximum, et moins de 500 Ko par image si possible
+  (exporte depuis Photoshop en "Exporter > Exporter sous", qualité 75-80 %).
+- Pas d'espaces ni d'accents dans les noms de fichiers.
+- La couverture s'affiche en 4:3 dans la grille et en 16:9 sur la page projet : garde le sujet bien centré.
+
+Pense aussi à mettre une image "images/partage.jpg" (1200 x 630 px) :
+c'est l'aperçu qui s'affiche quand quelqu'un partage le lien de ton site.

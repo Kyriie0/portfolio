@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Math.dg, graphiste</title>
+  <meta name="description" content="Math.dg, graphiste à Clermont-Ferrand : affiches, identités visuelles, covers et visuels sport & esport pour des artistes, des clubs et des créateurs.">
+  <meta name="theme-color" content="#0A0A0B">
+
+  <!-- Aperçu quand le lien est partagé (Instagram, X, WhatsApp...) -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Math.dg, graphiste">
+  <meta property="og:description" content="Affiches, identités visuelles, covers et visuels sport & esport.">
+  <meta property="og:url" content="https://mathdg.fr/">
+  <meta property="og:image" content="https://mathdg.fr/images/partage.jpg">
+  <link rel="canonical" href="https://mathdg.fr/">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@100..900&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip" href="#app">Aller au contenu</a>
+
+  <!-- Écran d'ouverture -->
+  <div class="chargeur" aria-hidden="true">
+    <div class="ch-cadre"></div>
+    <p class="ch-nom" data-signature>Math.dg</p>
+    <p class="ch-compteur">0</p>
+  </div>
+
+  <div class="progression" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <a class="logo" href="#/" data-signature>Math.dg</a>
+    <nav class="nav" aria-label="Navigation principale">
+      <a href="#/travaux" data-nav="travaux">Travaux</a>
+      <a href="#/a-propos" data-nav="a-propos">À propos</a>
+      <a href="#/contact" class="nav-contact aimant" data-nav="contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="app" tabindex="-1">
+    <div id="vue-accueil"></div>
+    <div id="vue-projet" hidden></div>
+  </main>
+
+  <!-- Bulle qui suit la souris sur les visuels -->
+  <div class="curseur" aria-hidden="true"><span></span></div>
+
+  <!-- Visionneuse plein écran -->
+  <dialog class="visionneuse" aria-label="Visionneuse d'images">
+    <figure class="vis-figure">
+      <div class="vis-media"></div>
+      <figcaption class="vis-legende"></figcaption>
+    </figure>
+    <div class="vis-barre">
+      <button type="button" class="vis-prec">Précédente</button>
+      <p class="vis-compteur" aria-live="polite"></p>
+      <button type="button" class="vis-suiv">Suivante</button>
+    </div>
+    <button type="button" class="vis-fermer" autofocus>Fermer</button>
+  </dialog>
+
+  <noscript><p class="noscript">Ce portfolio a besoin de JavaScript pour s'afficher.</p></noscript>
+
+  <script src="js/contenu.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,701 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Administration, Math.dg</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700..900&family=Manrope:wght@300..800&display=swap" rel="stylesheet">
+  <style>
+    :root { --fond: #0A0A0B; --fond-2: #151517; --fond-3: #1E1E21; --texte: #F0EEE9; --texte-2: #9A9893; --trait: #2A2A2D; --accent: #4D6BFF; --ok: #3CCB7F; --danger: #FF6B5E; color-scheme: dark; }
+    *, *::before, *::after { box-sizing: border-box; }
+    body { margin: 0; background: var(--fond); color: var(--texte); font: 15px/1.5 "Manrope", "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+    h1, h2, h3, p, ul, ol { margin: 0; padding: 0; }
+    ul, ol { list-style: none; }
+    a { color: inherit; }
+    img { display: block; max-width: 100%; }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    button { cursor: pointer; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    [hidden] { display: none !important; }
+
+    .page { max-width: 980px; margin: 0 auto; padding: 0 20px 120px; }
+    .titre { font: 900 clamp(2.4rem, 6vw, 3.6rem)/0.9 "Big Shoulders Display", Impact, sans-serif; text-transform: uppercase; }
+    h2 { font-size: 1.25rem; font-weight: 700; }
+    h3 { font-size: 13px; font-weight: 600; color: var(--texte-2); margin-bottom: 8px; }
+    .aide { color: var(--texte-2); font-size: 14px; }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 40px; padding: 0 16px; border-radius: 8px; border: 1px solid var(--trait); background: var(--fond-3); font-weight: 600; white-space: nowrap; }
+    .btn:hover:not(:disabled) { border-color: var(--texte-2); }
+    .btn:disabled { opacity: 0.45; cursor: default; }
+    .btn.plein { background: var(--texte); color: var(--fond); border-color: var(--texte); }
+    .btn.plein:hover:not(:disabled) { background: #fff; }
+    .btn.accent { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .btn.danger { color: var(--danger); }
+    .btn.mini { min-height: 34px; min-width: 34px; padding: 0 9px; }
+    .lien { background: none; border: 0; padding: 0; color: var(--texte-2); text-decoration: underline; text-underline-offset: 3px; }
+    .lien:hover { color: var(--texte); }
+
+    label { display: grid; gap: 6px; font-size: 13px; font-weight: 600; color: var(--texte-2); }
+    input[type="text"], input[type="email"], input[type="url"], input[type="password"], select, textarea {
+      width: 100%; min-height: 42px; padding: 9px 12px; border-radius: 8px; border: 1px solid var(--trait); background: var(--fond-2); color: var(--texte); font-weight: 400; font-size: 15px;
+    }
+    textarea { min-height: 120px; resize: vertical; line-height: 1.5; }
+    input[type="color"] { width: 56px; height: 42px; padding: 3px; border-radius: 8px; border: 1px solid var(--trait); background: var(--fond-2); }
+    .case { display: flex; align-items: center; gap: 10px; color: var(--texte); font-size: 15px; font-weight: 500; }
+    .case input { width: 18px; height: 18px; accent-color: var(--accent); }
+    .champs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .champs .large { grid-column: 1 / -1; }
+    .bloc { background: var(--fond-2); border: 1px solid var(--trait); border-radius: 12px; padding: 20px; display: grid; gap: 16px; }
+    .pile { display: grid; gap: 22px; }
+
+    /* Connexion */
+    .connexion { max-width: 560px; margin: 0 auto; padding: 8vh 20px 80px; display: grid; gap: 24px; }
+    .etapes { display: grid; gap: 8px; counter-reset: e; }
+    .etapes li { counter-increment: e; padding-left: 30px; position: relative; color: var(--texte-2); font-size: 14px; }
+    .etapes li::before { content: counter(e); position: absolute; left: 0; top: 1px; width: 20px; height: 20px; border-radius: 50%; background: var(--fond-3); color: var(--texte); font-size: 12px; font-weight: 700; display: grid; place-items: center; }
+    .etapes b { color: var(--texte); font-weight: 600; }
+
+    /* Barre du haut */
+    .barre { position: sticky; top: 0; z-index: 10; background: rgba(10, 10, 11, 0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--trait); }
+    .barre-in { max-width: 980px; margin: 0 auto; padding: 12px 20px; display: flex; align-items: center; gap: 12px 18px; flex-wrap: wrap; }
+    .marque { font: 800 22px/1 "Big Shoulders Display", Impact, sans-serif; margin-right: auto; }
+    .statut { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--texte-2); }
+    .statut i { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); }
+    .statut.sale i { background: #F5B942; }
+    .statut.sale { color: var(--texte); }
+    .onglets { display: flex; gap: 6px; flex-wrap: wrap; padding: 22px 0; }
+    .onglet { min-height: 38px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--trait); background: none; color: var(--texte-2); font-weight: 600; }
+    .onglet[aria-pressed="true"] { background: var(--texte); color: var(--fond); border-color: var(--texte); }
+    .message { margin-bottom: 18px; padding: 12px 16px; border-radius: 10px; border: 1px solid var(--trait); background: var(--fond-2); }
+    .message.ok { border-color: color-mix(in srgb, var(--ok) 50%, transparent); }
+    .message.erreur { border-color: color-mix(in srgb, var(--danger) 60%, transparent); color: #FFC9C3; }
+
+    /* Listes */
+    .tete { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+    .ligne { display: grid; grid-template-columns: auto 64px minmax(0, 1fr) auto; align-items: center; gap: 14px; padding: 10px 12px; background: var(--fond-2); border: 1px solid var(--trait); border-radius: 12px; }
+    .ligne + .ligne { margin-top: 8px; }
+    .ligne.glisse { opacity: 0.4; }
+    .ligne.cible { border-color: var(--accent); }
+    .poignee { cursor: grab; color: var(--texte-2); padding: 6px 2px; user-select: none; font-size: 18px; line-height: 1; }
+    .vig { width: 64px; height: 64px; border-radius: 8px; overflow: hidden; background: var(--fond-3); }
+    .vig img { width: 100%; height: 100%; object-fit: cover; }
+    .l-titre { font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .l-info { color: var(--texte-2); font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+    .vide { padding: 32px; text-align: center; color: var(--texte-2); border: 1px dashed var(--trait); border-radius: 12px; }
+
+    /* Éditeur */
+    .couv { display: flex; gap: 18px; align-items: flex-start; flex-wrap: wrap; }
+    .couv-img { width: 150px; min-height: 110px; border-radius: 10px; overflow: hidden; background: var(--fond-3); display: grid; place-items: center; color: var(--texte-2); font-size: 13px; }
+    .couv-img img { width: 100%; height: auto; }
+    .couv-cote { display: grid; gap: 10px; flex: 1; min-width: 220px; }
+    .gal { display: grid; grid-template-columns: 84px minmax(0, 1fr) auto; gap: 12px; align-items: start; padding: 12px; border: 1px solid var(--trait); border-radius: 10px; }
+    .gal + .gal { margin-top: 8px; }
+    .gal .vig { width: 84px; height: 84px; }
+    .gal-champs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .gal-champs .large { grid-column: 1 / -1; }
+    .rangee { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) auto; gap: 8px; align-items: end; }
+    .rangee + .rangee { margin-top: 8px; }
+    .pied-edit { position: sticky; bottom: 0; display: flex; gap: 10px; flex-wrap: wrap; padding: 14px 0; background: linear-gradient(transparent, var(--fond) 30%); }
+    .fichier { position: absolute; width: 1px; height: 1px; opacity: 0; }
+
+    @media (max-width: 640px) {
+      .champs, .gal-champs { grid-template-columns: 1fr; }
+      .ligne { grid-template-columns: 52px minmax(0, 1fr); }
+      .ligne .poignee { display: none; }
+      .ligne .vig { width: 52px; height: 52px; }
+      .ligne .actions { grid-column: 1 / -1; justify-content: flex-start; }
+      .gal { grid-template-columns: 64px minmax(0, 1fr); }
+      .gal .vig { width: 64px; height: 64px; }
+      .gal .actions { grid-column: 1 / -1; justify-content: flex-start; }
+      .rangee { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div id="racine"></div>
+<noscript><p style="padding:2rem">Cette page a besoin de JavaScript.</p></noscript>
+
+<script>
+/* Administration du portfolio Math.dg.
+   Cette page modifie js/contenu.js et le dossier images/ directement dans ton dépôt GitHub.
+   Sans ton jeton d'accès GitHub, elle ne peut rien lire ni modifier : toi seul peux publier. */
+(() => {
+  "use strict";
+
+  const racine = document.getElementById("racine");
+  const CLE = "mdg-admin";
+  const FORMATS = [["portrait", "Portrait (affiche)"], ["carre", "Carré (cover, logo)"], ["paysage", "Paysage"], ["large", "Large 16:9 (miniature)"]];
+  const LARGEURS = [["", "Pleine largeur"], ["demi", "Deux par ligne"], ["tiers", "Trois par ligne"], ["centre", "Seule, centrée"]];
+
+  let conf = { depot: "", branche: "main", dossier: "", jeton: "" };
+  try { conf = { ...conf, ...JSON.parse(localStorage.getItem(CLE) || "{}") }; } catch { /* stockage indisponible */ }
+
+  const etat = {
+    connecte: false, site: null, cats: [], projets: [],
+    origine: new Set(),      // images présentes dans le dépôt au dernier chargement
+    envois: new Map(),       // chemin -> image à envoyer à la prochaine publication
+    apercus: new Map(),      // chemin -> aperçu local
+    sale: false, occupe: "", onglet: "projets", brouillon: null, indexEdition: -1, message: null,
+  };
+
+  /* ---------- Petits outils ---------- */
+
+  // Crée un élément : h("div", { class: "x", onclick: fn }, enfants…). Le texte est toujours échappé.
+  function h(tag, attrs, ...enfants) {
+    const el = document.createElement(tag);
+    for (const [k, v] of Object.entries(attrs || {})) {
+      if (v === false || v == null) continue;
+      if (k.startsWith("on")) el.addEventListener(k.slice(2), v);
+      else if (k === "value") el.value = v;
+      else if (k === "checked") el.checked = !!v;
+      else el.setAttribute(k, v === true ? "" : v);
+    }
+    for (const e of enfants.flat()) if (e != null && e !== false) el.append(e.nodeType ? e : document.createTextNode(String(e)));
+    return el;
+  }
+  const slugifier = (s) => String(s).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, 50);
+  const idCourt = () => Math.random().toString(36).slice(2, 7);
+  const copie = (o) => JSON.parse(JSON.stringify(o));
+  const chemin = (p) => (conf.dossier ? conf.dossier.replace(/^\/+|\/+$/g, "") + "/" : "") + p;
+  const srcImage = (p) => etat.apercus.get(p) || p;
+  const nomCat = (nom) => (etat.cats.find((c) => c.nom === nom) || { titre: nom }).titre;
+
+  function marquerSale() {
+    etat.sale = true;
+    majStatut();
+  }
+  window.addEventListener("beforeunload", (e) => {
+    if (etat.sale || etat.brouillon) { e.preventDefault(); e.returnValue = ""; }
+  });
+
+  /* ---------- GitHub ---------- */
+
+  async function api(route, options = {}) {
+    let rep;
+    try {
+      rep = await fetch(`https://api.github.com/repos/${conf.depot}${route}`, {
+        ...options,
+        headers: {
+          Authorization: `Bearer ${conf.jeton}`,
+          Accept: options.brut ? "application/vnd.github.raw+json" : "application/vnd.github+json",
+          "X-GitHub-Api-Version": "2022-11-28",
+          ...(options.body ? { "Content-Type": "application/json" } : {}),
+        },
+      });
+    } catch {
+      throw new Error("Impossible de joindre GitHub. Vérifie ta connexion internet.");
+    }
+    if (!rep.ok) {
+      const messages = {
+        401: "Jeton refusé : il est faux ou expiré. Crée-en un nouveau sur GitHub.",
+        403: "Accès refusé : le jeton n'a pas le droit d'écrire dans ce dépôt (permission « Contents : Read and write »).",
+        404: "Introuvable : vérifie le nom du dépôt, la branche et le dossier, et que le jeton a bien accès à ce dépôt.",
+        409: "Le dépôt a changé entre-temps. Recharge la page puis recommence.",
+        422: "GitHub a refusé l'envoi. Recharge la page puis recommence.",
+      };
+      throw new Error(messages[rep.status] || `Erreur GitHub ${rep.status}.`);
+    }
+    return options.brut ? rep.text() : rep.json();
+  }
+
+  function cheminsImages(projets) {
+    const s = new Set();
+    for (const p of projets) {
+      if (p.couverture) s.add(p.couverture);
+      if (p.vignette) s.add(p.vignette);
+      for (const i of p.images || []) { if (i.src) s.add(i.src); if (i.video) s.add(i.video); if (i.poster) s.add(i.poster); }
+    }
+    return s;
+  }
+
+  async function charger() {
+    const texte = await api(`/contents/${chemin("js/contenu.js")}?ref=${encodeURIComponent(conf.branche)}`, { brut: true });
+    let d;
+    try { d = new Function(texte + "\nreturn { SITE, CATEGORIES, PROJETS };")(); }
+    catch { throw new Error("Le fichier js/contenu.js du dépôt contient une erreur et ne peut pas être lu."); }
+    etat.site = d.SITE;
+    etat.cats = d.CATEGORIES;
+    etat.projets = d.PROJETS;
+    etat.origine = cheminsImages(etat.projets);
+    etat.envois.clear();
+    etat.sale = false;
+    etat.connecte = true;
+  }
+
+  function genererContenu() {
+    const projets = etat.projets.map((p) => ({
+      slug: p.slug, titre: p.titre || "", client: p.client || "",
+      annee: /^\d{4}$/.test(String(p.annee)) ? Number(p.annee) : p.annee || "",
+      categorie: p.categorie || "", format: p.format || "portrait", role: p.role || "",
+      couverture: p.couverture || "", vignette: p.vignette || "", couleur: p.couleur || "#4D6BFF",
+      description: p.description || [], images: p.images || [],
+    }));
+    const j = (o) => JSON.stringify(o, null, 2);
+    return `/* ==========================================================================
+   CONTENU DU SITE Math.dg
+   Ce fichier est mis à jour par la page d'administration (admin.html).
+   Tu peux aussi le modifier à la main : garde simplement les guillemets et les virgules.
+   ========================================================================== */
+
+const SITE = ${j(etat.site)};
+
+const CATEGORIES = ${j(etat.cats)};
+
+const PROJETS = ${j(projets)};
+`;
+  }
+
+  const enBase64 = (blob) => new Promise((ok, non) => {
+    const l = new FileReader();
+    l.onload = () => ok(String(l.result).split(",")[1]);
+    l.onerror = () => non(new Error("Lecture de l'image impossible."));
+    l.readAsDataURL(blob);
+  });
+
+  async function publier() {
+    if (etat.occupe) return;
+    const progres = (t) => { etat.occupe = t; majStatut(); };
+    etat.message = null;
+    try {
+      progres("Préparation…");
+      const br = encodeURIComponent(conf.branche);
+      const ref = await api(`/git/ref/heads/${br}`);
+      const tete = await api(`/git/commits/${ref.object.sha}`);
+      const arbre = await api(`/git/trees/${tete.tree.sha}?recursive=1`);
+      const existants = new Set(arbre.tree.map((e) => e.path));
+
+      const utilises = cheminsImages(etat.projets);
+      const aEnvoyer = [...etat.envois.keys()].filter((p) => utilises.has(p));
+      const entrees = [];
+      let n = 0;
+      for (const p of aEnvoyer) {
+        progres(`Envoi des images ${++n}/${aEnvoyer.length}…`);
+        const blob = await api("/git/blobs", { method: "POST", body: JSON.stringify({ content: await enBase64(etat.envois.get(p)), encoding: "base64" }) });
+        entrees.push({ path: chemin(p), mode: "100644", type: "blob", sha: blob.sha });
+      }
+      // Images qui ne servent plus : supprimées du dépôt
+      for (const p of etat.origine) {
+        if (!utilises.has(p) && existants.has(chemin(p))) entrees.push({ path: chemin(p), mode: "100644", type: "blob", sha: null });
+      }
+      entrees.push({ path: chemin("js/contenu.js"), mode: "100644", type: "blob", content: genererContenu() });
+
+      progres("Publication…");
+      const nouvelArbre = await api("/git/trees", { method: "POST", body: JSON.stringify({ base_tree: tete.tree.sha, tree: entrees }) });
+      const commit = await api("/git/commits", { method: "POST", body: JSON.stringify({ message: "Mise à jour du portfolio depuis l'administration", tree: nouvelArbre.sha, parents: [ref.object.sha] }) });
+      await api(`/git/refs/heads/${br}`, { method: "PATCH", body: JSON.stringify({ sha: commit.sha }) });
+
+      etat.origine = utilises;
+      etat.envois.clear();
+      etat.sale = false;
+      etat.message = { type: "ok", texte: "Publié. Le site se met à jour tout seul dans 1 à 2 minutes (recharge-le avec Ctrl + F5)." };
+    } catch (e) {
+      etat.message = { type: "erreur", texte: e.message };
+    }
+    etat.occupe = "";
+    rendu();
+    scrollTo({ top: 0 });
+  }
+
+  /* ---------- Images : redimensionnées dans le navigateur avant l'envoi ---------- */
+
+  async function versJpeg(source, maxi, qualite) {
+    const k = Math.min(1, maxi / Math.max(source.width, source.height));
+    const c = document.createElement("canvas");
+    c.width = Math.round(source.width * k);
+    c.height = Math.round(source.height * k);
+    const ctx = c.getContext("2d");
+    ctx.fillStyle = "#fff"; // les zones transparentes d'un PNG deviennent blanches
+    ctx.fillRect(0, 0, c.width, c.height);
+    ctx.imageSmoothingQuality = "high";
+    ctx.drawImage(source, 0, 0, c.width, c.height);
+    const blob = await new Promise((ok) => c.toBlob(ok, "image/jpeg", qualite));
+    if (!blob) throw new Error("Conversion de l'image impossible.");
+    return { blob, canvas: c };
+  }
+
+  async function lireImage(fichier) {
+    if (!/^image\/(jpeg|png|webp)$/.test(fichier.type)) throw new Error(`« ${fichier.name} » : format non pris en charge. Utilise un JPG, un PNG ou un WebP.`);
+    try { return await createImageBitmap(fichier); }
+    catch { throw new Error(`« ${fichier.name} » : image illisible.`); }
+  }
+
+  function couleurDominante(canvas) {
+    const t = document.createElement("canvas");
+    t.width = t.height = 40;
+    const ctx = t.getContext("2d");
+    ctx.drawImage(canvas, 0, 0, 40, 40);
+    const d = ctx.getImageData(0, 0, 40, 40).data;
+    let r = 0, g = 0, b = 0, poids = 0;
+    for (let i = 0; i < d.length; i += 4) {
+      const max = Math.max(d[i], d[i + 1], d[i + 2]), min = Math.min(d[i], d[i + 1], d[i + 2]);
+      const p = ((max - min) / 255) ** 2 + 0.001; // les couleurs vives comptent plus
+      r += d[i] * p; g += d[i + 1] * p; b += d[i + 2] * p; poids += p;
+    }
+    let c = [r / poids, g / poids, b / poids];
+    const lum = (c[0] + c[1] + c[2]) / 3;
+    const cible = Math.min(Math.max(lum, 95), 150);
+    c = c.map((v) => Math.round(Math.min(255, Math.max(0, v * (cible / Math.max(lum, 1))))));
+    return "#" + c.map((v) => v.toString(16).padStart(2, "0")).join("").toUpperCase();
+  }
+
+  function enregistrerImage(cheminImg, blob) {
+    etat.envois.set(cheminImg, blob);
+    etat.apercus.set(cheminImg, URL.createObjectURL(blob));
+  }
+
+  async function ajouterCouverture(fichier) {
+    const b = etat.brouillon;
+    const img = await lireImage(fichier);
+    const id = idCourt();
+    const grande = await versJpeg(img, 2400, 0.9);
+    const petite = await versJpeg(img, 1400, 0.84);
+    b.couverture = `images/projets/${b.slug}/cover-${id}.jpg`;
+    b.vignette = `images/projets/${b.slug}/vignette-${id}.jpg`;
+    enregistrerImage(b.couverture, grande.blob);
+    enregistrerImage(b.vignette, petite.blob);
+    b.couleur = couleurDominante(petite.canvas);
+    const ratio = img.width / img.height;
+    b.format = ratio > 1.6 ? "large" : ratio > 1.15 ? "paysage" : ratio > 0.87 ? "carre" : "portrait";
+  }
+
+  async function ajouterGalerie(fichiers) {
+    const b = etat.brouillon;
+    for (const f of fichiers) {
+      const img = await lireImage(f);
+      const { blob } = await versJpeg(img, 2400, 0.9);
+      const p = `images/projets/${b.slug}/${slugifier(f.name.replace(/\.[^.]+$/, "")) || "image"}-${idCourt()}.jpg`;
+      enregistrerImage(p, blob);
+      b.images.push({ src: p, alt: b.titre || "" });
+    }
+  }
+
+  /* ---------- Écran de connexion ---------- */
+
+  function vueConnexion() {
+    const depot = h("input", { type: "text", value: conf.depot, placeholder: "ton-pseudo/portfolio", autocomplete: "off", required: true });
+    const branche = h("input", { type: "text", value: conf.branche || "main", required: true });
+    const dossier = h("input", { type: "text", value: conf.dossier, placeholder: "vide si le site est à la racine du dépôt" });
+    const jeton = h("input", { type: "password", value: conf.jeton, placeholder: "github_pat_…", autocomplete: "off", required: true });
+    const bouton = h("button", { class: "btn plein", type: "submit" }, "Se connecter");
+    const erreur = h("p", { class: "message erreur", role: "alert", hidden: true });
+
+    const form = h("form", { class: "bloc", onsubmit: async (e) => {
+      e.preventDefault();
+      conf = { depot: depot.value.trim().replace(/^https:\/\/github\.com\//, "").replace(/\/+$/, ""), branche: branche.value.trim() || "main", dossier: dossier.value.trim(), jeton: jeton.value.trim() };
+      bouton.disabled = true; bouton.textContent = "Connexion…"; erreur.hidden = true;
+      try {
+        const d = await api("");
+        if (d.permissions && !d.permissions.push) throw new Error("Ce jeton peut lire le dépôt mais pas y écrire. Donne-lui la permission « Contents : Read and write ».");
+        await charger();
+        try { localStorage.setItem(CLE, JSON.stringify(conf)); } catch { /* stockage indisponible */ }
+        rendu();
+      } catch (err) {
+        erreur.textContent = err.message; erreur.hidden = false;
+        bouton.disabled = false; bouton.textContent = "Se connecter";
+      }
+    } },
+      h("label", {}, "Dépôt GitHub du site", depot),
+      h("div", { class: "champs" }, h("label", {}, "Branche", branche), h("label", {}, "Dossier du site (optionnel)", dossier)),
+      h("label", {}, "Jeton d'accès GitHub", jeton),
+      erreur, bouton,
+    );
+
+    return h("main", { class: "connexion" },
+      h("div", {}, h("h1", { class: "titre" }, "Administration"), h("p", { class: "aide", style: "margin-top:10px" }, "Gère tes projets sans toucher au code. Seule une personne qui possède ton jeton GitHub peut modifier le site.")),
+      form,
+      h("div", { class: "bloc" },
+        h("h2", {}, "Créer ton jeton (une seule fois)"),
+        h("ol", { class: "etapes" },
+          h("li", {}, "Sur GitHub : ", h("b", {}, "Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token"), "."),
+          h("li", {}, h("b", {}, "Repository access"), " : « Only select repositories », puis choisis le dépôt du portfolio."),
+          h("li", {}, h("b", {}, "Permissions → Repository permissions → Contents"), " : « Read and write »."),
+          h("li", {}, "Clique sur ", h("b", {}, "Generate token"), ", copie-le et colle-le ci-dessus."),
+        ),
+        h("p", { class: "aide" }, "Le jeton reste enregistré uniquement dans ce navigateur. Ne le partage avec personne et ne l'écris jamais dans les fichiers du site."),
+      ),
+    );
+  }
+
+  /* ---------- Barre du haut ---------- */
+
+  let elStatut, elPublier;
+  function majStatut() {
+    if (!elStatut) return;
+    elStatut.className = "statut" + (etat.sale ? " sale" : "");
+    elStatut.lastChild.textContent = etat.occupe || (etat.sale ? "Modifications non publiées" : "Tout est publié");
+    elPublier.disabled = !etat.sale || !!etat.occupe || !!etat.brouillon;
+    elPublier.textContent = etat.occupe ? "Publication…" : "Publier";
+  }
+
+  function barre() {
+    elStatut = h("p", { class: "statut", "aria-live": "polite" }, h("i", { "aria-hidden": "true" }), "");
+    elPublier = h("button", { class: "btn accent", type: "button", onclick: publier }, "Publier");
+    return h("header", { class: "barre" }, h("div", { class: "barre-in" },
+      h("span", { class: "marque" }, "Math.dg, admin"),
+      elStatut, elPublier,
+      h("a", { class: "btn", href: "./", target: "_blank", rel: "noopener" }, "Voir le site"),
+      h("button", { class: "lien", type: "button", onclick: () => {
+        if ((etat.sale || etat.brouillon) && !confirm("Des modifications ne sont pas publiées. Se déconnecter quand même ?")) return;
+        try { localStorage.removeItem(CLE); } catch { /* stockage indisponible */ }
+        conf.jeton = ""; etat.connecte = false; etat.sale = false; etat.brouillon = null;
+        rendu();
+      } }, "Se déconnecter"),
+    ));
+  }
+
+  /* ---------- Liste des projets ---------- */
+
+  function deplacer(liste, de, vers) {
+    if (vers < 0 || vers >= liste.length || de === vers) return false;
+    liste.splice(vers, 0, liste.splice(de, 1)[0]);
+    return true;
+  }
+
+  function vueProjets() {
+    let glisse = -1;
+    const lignes = etat.projets.map((p, i) => {
+      const li = h("li", { class: "ligne", draggable: "true",
+        ondragstart: (e) => { glisse = i; li.classList.add("glisse"); e.dataTransfer.effectAllowed = "move"; e.dataTransfer.setData("text/plain", String(i)); },
+        ondragend: () => li.classList.remove("glisse"),
+        ondragover: (e) => { e.preventDefault(); e.dataTransfer.dropEffect = "move"; li.classList.add("cible"); },
+        ondragleave: () => li.classList.remove("cible"),
+        ondrop: (e) => { e.preventDefault(); if (deplacer(etat.projets, glisse, i)) { etat.sale = true; rendu(); } },
+      },
+        h("span", { class: "poignee", title: "Glisser pour déplacer", "aria-hidden": "true" }, "⠿"),
+        h("div", { class: "vig" }, p.vignette || p.couverture ? h("img", { src: srcImage(p.vignette || p.couverture), alt: "", loading: "lazy" }) : null),
+        h("div", { style: "min-width:0" }, h("p", { class: "l-titre" }, p.titre || "(sans titre)"), h("p", { class: "l-info" }, [nomCat(p.categorie), p.client, p.annee].filter(Boolean).join(" · "))),
+        h("div", { class: "actions" },
+          h("button", { class: "btn mini", type: "button", "aria-label": `Monter ${p.titre}`, disabled: i === 0, onclick: () => { deplacer(etat.projets, i, i - 1); etat.sale = true; rendu(); } }, "↑"),
+          h("button", { class: "btn mini", type: "button", "aria-label": `Descendre ${p.titre}`, disabled: i === etat.projets.length - 1, onclick: () => { deplacer(etat.projets, i, i + 1); etat.sale = true; rendu(); } }, "↓"),
+          h("button", { class: "btn", type: "button", onclick: () => { etat.brouillon = copie(p); etat.indexEdition = i; rendu(); scrollTo({ top: 0 }); } }, "Modifier"),
+          h("button", { class: "btn danger", type: "button", onclick: () => {
+            if (!confirm(`Supprimer le projet « ${p.titre} » et ses images ?`)) return;
+            etat.projets.splice(i, 1); etat.sale = true; rendu();
+          } }, "Supprimer"),
+        ),
+      );
+      return li;
+    });
+
+    return h("section", {},
+      h("div", { class: "tete" },
+        h("div", {}, h("h2", {}, `Projets (${etat.projets.length})`), h("p", { class: "aide" }, "L'ordre de cette liste est l'ordre d'affichage sur le site.")),
+        h("button", { class: "btn plein", type: "button", onclick: () => {
+          etat.brouillon = { slug: "", titre: "", client: "", annee: new Date().getFullYear(), categorie: (etat.cats[0] || {}).nom || "", format: "portrait", role: "", couverture: "", vignette: "", couleur: "#4D6BFF", description: [], images: [] };
+          etat.indexEdition = -1; rendu(); scrollTo({ top: 0 });
+        } }, "Ajouter un projet"),
+      ),
+      lignes.length ? h("ul", {}, lignes) : h("p", { class: "vide" }, "Aucun projet pour l'instant. Ajoute le premier."),
+    );
+  }
+
+  /* ---------- Éditeur de projet ---------- */
+
+  function champ(libelle, valeur, surSaisie, attrs = {}) {
+    return h("label", attrs.classe ? { class: attrs.classe } : {}, libelle, h("input", { type: "text", value: valeur ?? "", placeholder: attrs.placeholder, oninput: (e) => surSaisie(e.target.value) }));
+  }
+  function liste(libelle, options, valeur, surChoix) {
+    return h("label", {}, libelle, h("select", { onchange: (e) => surChoix(e.target.value) }, options.map(([v, t]) => h("option", { value: v, selected: v === (valeur || "") }, t))));
+  }
+
+  async function avecAttente(bouton, action) {
+    const texte = bouton.textContent;
+    bouton.disabled = true; bouton.textContent = "Traitement…";
+    try { await action(); etat.message = null; }
+    catch (e) { etat.message = { type: "erreur", texte: e.message }; }
+    bouton.disabled = false; bouton.textContent = texte;
+    rendu();
+  }
+
+  function vueEditeur() {
+    const b = etat.brouillon;
+    const nouveau = etat.indexEdition < 0;
+    const besoinTitre = () => {
+      if (b.slug) return true;
+      b.slug = slugifier(b.titre);
+      if (!b.slug) { alert("Donne d'abord un titre au projet."); return false; }
+      let s = b.slug, n = 2;
+      while (etat.projets.some((p) => p.slug === s)) s = `${b.slug}-${n++}`;
+      b.slug = s;
+      return true;
+    };
+
+    const fCouv = h("input", { class: "fichier", type: "file", accept: "image/jpeg,image/png,image/webp", tabindex: "-1" });
+    const bCouv = h("button", { class: "btn", type: "button", onclick: () => { if (besoinTitre()) fCouv.click(); } }, b.couverture ? "Remplacer l'image" : "Choisir l'image");
+    fCouv.addEventListener("change", () => fCouv.files[0] && besoinTitre() && avecAttente(bCouv, () => ajouterCouverture(fCouv.files[0])));
+
+    const fGal = h("input", { class: "fichier", type: "file", accept: "image/jpeg,image/png,image/webp", multiple: true, tabindex: "-1" });
+    const bGal = h("button", { class: "btn", type: "button", onclick: () => { if (besoinTitre()) fGal.click(); } }, "Ajouter des images");
+    fGal.addEventListener("change", () => fGal.files.length && besoinTitre() && avecAttente(bGal, () => ajouterGalerie([...fGal.files])));
+
+    const galerie = b.images.map((im, i) => h("li", { class: "gal" },
+      h("div", { class: "vig" }, im.src ? h("img", { src: srcImage(im.src), alt: "" }) : h("span", { class: "aide", style: "display:grid;place-items:center;height:100%" }, "Vidéo")),
+      h("div", { class: "gal-champs" },
+        h("label", {}, "Description de l'image", h("input", { type: "text", value: im.alt || "", placeholder: "Ce qu'on voit sur l'image", oninput: (e) => { im.alt = e.target.value; } })),
+        liste("Affichage", LARGEURS, im.largeur, (v) => { if (v) im.largeur = v; else delete im.largeur; }),
+        h("label", { class: "large" }, "Légende (optionnelle)", h("input", { type: "text", value: im.legende || "", oninput: (e) => { if (e.target.value) im.legende = e.target.value; else delete im.legende; } })),
+      ),
+      h("div", { class: "actions" },
+        h("button", { class: "btn mini", type: "button", "aria-label": "Monter l'image", disabled: i === 0, onclick: () => { deplacer(b.images, i, i - 1); rendu(); } }, "↑"),
+        h("button", { class: "btn mini", type: "button", "aria-label": "Descendre l'image", disabled: i === b.images.length - 1, onclick: () => { deplacer(b.images, i, i + 1); rendu(); } }, "↓"),
+        h("button", { class: "btn mini danger", type: "button", "aria-label": "Retirer l'image", onclick: () => { b.images.splice(i, 1); rendu(); } }, "✕"),
+      ),
+    ));
+
+    const fermer = () => { etat.brouillon = null; etat.indexEdition = -1; etat.message = null; rendu(); scrollTo({ top: 0 }); };
+
+    return h("section", { class: "pile" },
+      h("div", {}, h("button", { class: "lien", type: "button", onclick: () => { if (confirm("Abandonner les modifications de ce projet ?")) fermer(); } }, "← Retour aux projets"),
+        h("h2", { style: "margin-top:10px" }, nouveau ? "Nouveau projet" : `Modifier « ${b.titre} »`)),
+
+      h("div", { class: "bloc" },
+        h("div", { class: "champs" },
+          champ("Titre", b.titre, (v) => { b.titre = v; }),
+          liste("Catégorie", etat.cats.map((c) => [c.nom, c.titre]), b.categorie, (v) => { b.categorie = v; }),
+          champ("Client ou contexte", b.client, (v) => { b.client = v; }, { placeholder: "Nom du client, « Projet scolaire », « Projet fictif »…" }),
+          champ("Année", b.annee, (v) => { b.annee = v.trim(); }, { placeholder: "2026 (vide pour ne pas l'afficher)" }),
+          champ("Rôle", b.role, (v) => { b.role = v; }, { classe: "large", placeholder: "Affiche, logo, série de 3 affiches…" }),
+          h("label", { class: "large" }, "Description (saute une ligne entre deux paragraphes)",
+            h("textarea", { oninput: (e) => { b.description = e.target.value.split(/\n\s*\n/).map((t) => t.trim()).filter(Boolean); } }, (b.description || []).join("\n\n"))),
+        ),
+      ),
+
+      h("div", { class: "bloc" },
+        h("h2", {}, "Image principale"),
+        h("div", { class: "couv" },
+          h("div", { class: "couv-img" }, b.couverture ? h("img", { src: srcImage(b.vignette || b.couverture), alt: "" }) : "Aucune image"),
+          h("div", { class: "couv-cote" },
+            h("div", {}, bCouv, fCouv),
+            h("p", { class: "aide" }, "Envoie ton export en pleine qualité (JPG ou PNG) : la page crée toute seule la version web et la vignette."),
+            h("div", { class: "champs" },
+              liste("Forme de la vignette", FORMATS, b.format, (v) => { b.format = v; }),
+              h("label", {}, "Couleur d'ambiance de la page", h("input", { type: "color", value: /^#[0-9a-f]{6}$/i.test(b.couleur || "") ? b.couleur : "#4D6BFF", oninput: (e) => { b.couleur = e.target.value.toUpperCase(); } })),
+            ),
+          ),
+        ),
+      ),
+
+      h("div", { class: "bloc" },
+        h("div", { class: "tete", style: "margin:0" }, h("div", {}, h("h2", {}, `Galerie (${b.images.length})`), h("p", { class: "aide" }, "Les images affichées sous l'image principale.")), h("div", {}, bGal, fGal)),
+        galerie.length ? h("ul", {}, galerie) : null,
+      ),
+
+      h("div", { class: "pied-edit" },
+        h("button", { class: "btn plein", type: "button", onclick: () => {
+          if (!b.titre.trim()) return alert("Le projet doit avoir un titre.");
+          if (!besoinTitre()) return;
+          if (nouveau) etat.projets.unshift(b); else etat.projets[etat.indexEdition] = b;
+          etat.sale = true;
+          fermer();
+        } }, nouveau ? "Ajouter à la liste" : "Enregistrer"),
+        h("button", { class: "btn", type: "button", onclick: () => { if (confirm("Abandonner les modifications de ce projet ?")) fermer(); } }, "Annuler"),
+        h("p", { class: "aide", style: "align-self:center" }, "Rien n'est en ligne tant que tu n'as pas cliqué sur « Publier »."),
+      ),
+    );
+  }
+
+  /* ---------- Infos du site ---------- */
+
+  function vueSite() {
+    const s = etat.site;
+    const txt = (libelle, cle, attrs = {}) => h("label", attrs.classe ? { class: attrs.classe } : {}, libelle, h("input", { type: attrs.type || "text", value: s[cle] ?? "", oninput: (e) => { s[cle] = e.target.value; marquerSale(); } }));
+    const zone = (libelle, valeur, surSaisie) => h("label", { class: "large" }, libelle, h("textarea", { oninput: (e) => { surSaisie(e.target.value); marquerSale(); } }, valeur));
+    const lignes = (t) => t.split("\n").map((x) => x.trim()).filter(Boolean);
+    s.reseaux = s.reseaux || [];
+
+    return h("section", { class: "pile" },
+      h("div", { class: "bloc" }, h("h2", {}, "Identité"),
+        h("div", { class: "champs" },
+          txt("Nom affiché en grand", "signature"), txt("Métier", "metier"), txt("Ville", "ville"),
+          h("label", {}, "Couleur d'accent du site", h("input", { type: "color", value: /^#[0-9a-f]{6}$/i.test(s.accent || "") ? s.accent : "#4D6BFF", oninput: (e) => { s.accent = e.target.value.toUpperCase(); marquerSale(); } })),
+          zone("Accroche (à côté du nom, sur l'accueil)", s.accroche || "", (v) => { s.accroche = v.trim(); }),
+          h("label", { class: "case large" }, h("input", { type: "checkbox", checked: s.disponible, onchange: (e) => { s.disponible = e.target.checked; marquerSale(); } }), "Disponible pour des projets (point vert sur l'accueil)"),
+          txt("Phrase de disponibilité", "disponibilite", { classe: "large" }),
+        )),
+      h("div", { class: "bloc" }, h("h2", {}, "Contact"),
+        txt("Adresse email", "email", { type: "email" }),
+        h("div", {}, h("h3", {}, "Réseaux"),
+          s.reseaux.map((r, i) => h("div", { class: "rangee" },
+            h("label", {}, "Nom", h("input", { type: "text", value: r.nom, oninput: (e) => { r.nom = e.target.value; marquerSale(); } })),
+            h("label", {}, "Lien", h("input", { type: "url", value: r.url, placeholder: "https://…", oninput: (e) => { r.url = e.target.value.trim(); marquerSale(); } })),
+            h("button", { class: "btn mini danger", type: "button", "aria-label": `Retirer ${r.nom}`, onclick: () => { s.reseaux.splice(i, 1); etat.sale = true; rendu(); } }, "✕"),
+          )),
+          h("button", { class: "btn", type: "button", style: "margin-top:10px", onclick: () => { s.reseaux.push({ nom: "", url: "" }); etat.sale = true; rendu(); } }, "Ajouter un réseau"),
+        )),
+      h("div", { class: "bloc" }, h("h2", {}, "À propos"),
+        h("div", { class: "champs" },
+          zone("Texte (saute une ligne entre deux paragraphes ; le premier s'affiche en grand)", (s.aPropos || []).join("\n\n"), (v) => { s.aPropos = v.split(/\n\s*\n/).map((t) => t.trim()).filter(Boolean); }),
+          h("label", {}, "Ce que je fais (un par ligne)", h("textarea", { oninput: (e) => { s.competences = lignes(e.target.value); marquerSale(); } }, (s.competences || []).join("\n"))),
+          h("label", {}, "Outils (un par ligne)", h("textarea", { oninput: (e) => { s.outils = lignes(e.target.value); marquerSale(); } }, (s.outils || []).join("\n"))),
+        )),
+    );
+  }
+
+  /* ---------- Catégories ---------- */
+
+  function vueCategories() {
+    return h("section", {},
+      h("div", { class: "tete" },
+        h("div", {}, h("h2", {}, "Catégories"), h("p", { class: "aide" }, "Ce sont les filtres de la section Travaux, dans cet ordre. Une catégorie sans projet n'apparaît pas sur le site.")),
+        h("button", { class: "btn plein", type: "button", onclick: () => {
+          const nom = (prompt("Nom de la nouvelle catégorie :") || "").trim();
+          if (!nom) return;
+          if (etat.cats.some((c) => c.nom === nom)) return alert("Cette catégorie existe déjà.");
+          etat.cats.push({ nom, titre: nom, sousTitre: nom }); etat.sale = true; rendu();
+        } }, "Ajouter une catégorie"),
+      ),
+      h("ul", {}, etat.cats.map((c, i) => {
+        const n = etat.projets.filter((p) => p.categorie === c.nom).length;
+        return h("li", { class: "bloc", style: "margin-top:8px" },
+          h("div", { class: "champs" },
+            h("label", {}, "Nom affiché", h("input", { type: "text", value: c.titre, oninput: (e) => { c.titre = e.target.value; marquerSale(); } })),
+            h("label", {}, "Petite ligne sur la page projet", h("input", { type: "text", value: c.sousTitre || "", oninput: (e) => { c.sousTitre = e.target.value; marquerSale(); } })),
+          ),
+          h("div", { class: "actions", style: "justify-content:space-between;align-items:center" },
+            h("p", { class: "aide" }, n === 0 ? "Aucun projet" : n === 1 ? "1 projet" : `${n} projets`),
+            h("div", { class: "actions" },
+              h("button", { class: "btn mini", type: "button", "aria-label": `Monter ${c.titre}`, disabled: i === 0, onclick: () => { deplacer(etat.cats, i, i - 1); etat.sale = true; rendu(); } }, "↑"),
+              h("button", { class: "btn mini", type: "button", "aria-label": `Descendre ${c.titre}`, disabled: i === etat.cats.length - 1, onclick: () => { deplacer(etat.cats, i, i + 1); etat.sale = true; rendu(); } }, "↓"),
+              h("button", { class: "btn danger", type: "button", onclick: () => {
+                if (n) return alert(`Cette catégorie contient ${n} projet(s). Change d'abord leur catégorie.`);
+                if (!confirm(`Supprimer la catégorie « ${c.titre} » ?`)) return;
+                etat.cats.splice(i, 1); etat.sale = true; rendu();
+              } }, "Supprimer"),
+            ),
+          ),
+        );
+      })),
+    );
+  }
+
+  /* ---------- Rendu ---------- */
+
+  function rendu() {
+    if (!etat.connecte) { elStatut = null; return racine.replaceChildren(vueConnexion()); }
+    const onglets = [["projets", "Projets"], ["site", "Infos du site"], ["categories", "Catégories"]];
+    const vues = { projets: vueProjets, site: vueSite, categories: vueCategories };
+    racine.replaceChildren(
+      barre(),
+      h("main", { class: "page" },
+        etat.brouillon ? h("div", { style: "height:22px" }) : h("nav", { class: "onglets", "aria-label": "Sections" }, onglets.map(([id, t]) => h("button", { class: "onglet", type: "button", "aria-pressed": String(etat.onglet === id), onclick: () => { etat.onglet = id; etat.message = null; rendu(); } }, t))),
+        etat.message ? h("p", { class: `message ${etat.message.type}`, role: "status" }, etat.message.texte) : null,
+        etat.brouillon ? vueEditeur() : vues[etat.onglet](),
+      ),
+    );
+    majStatut();
+  }
+
+  // Si un jeton est déjà enregistré dans ce navigateur, on se reconnecte directement
+  if (conf.jeton && conf.depot) {
+    racine.replaceChildren(h("main", { class: "connexion" }, h("p", { class: "aide" }, "Connexion…")));
+    charger().catch(() => {}).finally(rendu);
+  } else rendu();
+})();
+</script>
+</body>
+</html>
