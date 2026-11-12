@@ -162,9 +162,7 @@ html.glisse .r-item { pointer-events: none; }
 .filtre[aria-pressed="true"] { background: var(--texte); color: var(--fond); border-color: var(--texte); }
 
 .grille { display: grid; grid-template-columns: repeat(var(--n, 3), minmax(0, 1fr)); gap: clamp(12px, 2.2vw, 34px); align-items: start; }
-.col { display: grid; gap: clamp(1.8rem, 4vw, 3.6rem); will-change: translate; }
-.col:nth-child(2) { margin-top: clamp(3rem, 9vw, 8.5rem); }
-.col:nth-child(3) { margin-top: clamp(1.2rem, 4vw, 3.5rem); }
+.col { display: grid; gap: clamp(1.8rem, 4vw, 3.6rem); }
 .carte { display: block; transition: opacity 0.2s, translate 0.2s; }
 .grille.sortie .carte { opacity: 0; translate: 0 12px; }
 .carte-media {
