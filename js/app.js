@@ -595,14 +595,6 @@
         piste.style.transform = `translate3d(${defX.toFixed(1)}px,0,0) skewX(${clamp(vitesse * -0.25, -8, 8).toFixed(2)}deg)`;
       }
 
-      // Colonnes de la grille à des vitesses différentes
-      const grille = $("[data-grille]");
-      if (grille && grille.children.length > 1) {
-        const p = clamp(grille.getBoundingClientRect().top, -4000, 1400);
-        const k = etat.colonnes === 3 ? [0, 0.07, -0.035] : [0, 0.05];
-        [...grille.children].forEach((col, i) => { if (k[i]) col.style.translate = `0 ${(p * k[i]).toFixed(1)}px`; });
-      }
-
       // Le texte « À propos » s'allume mot par mot
       if (mes.mots.length) {
         const r = mes.mots[0].parentElement.getBoundingClientRect();
