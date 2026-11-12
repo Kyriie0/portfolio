@@ -20,8 +20,7 @@ const SITE = {
   disponible: true,
   disponibilite: "Disponible pour des projets freelance",
 
-  // ⚠️ Remplace par ton adresse pro
-  email: "contact@ton-domaine.fr",
+  email: "mathdg00@gmail.com",
 
   // Supprime une ligne si tu n'as pas le réseau, colle ton vrai lien sinon
   reseaux: [
