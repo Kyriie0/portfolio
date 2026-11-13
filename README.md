@@ -80,6 +80,14 @@ Les images se glissent en pleine qualité : la page crée elle-même la version 
 
 Le jeton reste enregistré dans ton navigateur uniquement. Ne le partage pas et ne l'écris jamais dans un fichier du site. Si tu penses qu'il a fuité, supprime-le sur GitHub et crées-en un autre.
 
+## Formulaire de demande de projet
+
+La section Contact contient un formulaire : prénom, nom, email, type de demande, description, précisions, budget et délai. Chaque demande t'arrive par email à l'adresse de `contenu.js`, via le service gratuit FormSubmit.
+
+- **Activation (une seule fois)** : envoie-toi une demande test depuis https://mathdg.fr. Tu reçois un email de FormSubmit : clique sur « Activate Form ». Les demandes suivantes arrivent directement.
+- **Répondre** : clique simplement sur « Répondre » dans Gmail, la réponse part à l'adresse du client.
+- Les listes de choix (types, budgets, délais) se modifient dans `contenu.js` (`typesDemande`, `budgets`, `delais`).
+
 ## Brancher ton nom de domaine (mathdg.fr, chez OVHcloud)
 
 Le fichier `CNAME` du dossier indique déjà à GitHub que le site répond sur `mathdg.fr`.
@@ -97,7 +105,6 @@ Le fichier `CNAME` du dossier indique déjà à GitHub que le site répond sur `
 | A     | @     | 185.199.111.153           |
 
 4. Attends que GitHub valide (de quelques minutes à quelques heures), puis coche **Enforce HTTPS**.
-5. Pense à mettre ensuite une adresse email à ton domaine dans `contenu.js` (ex. `contact@mathdg.fr`), ça fait plus pro.
 
 ## Personnaliser le style
 
@@ -110,7 +117,7 @@ Le fichier `CNAME` du dossier indique déjà à GitHub que le site répond sur `
 - Écran d'ouverture : compteur de chargement et affiches qui défilent, puis le rideau se lève (une seule fois par visite)
 - Accueil : une rangée d'affiches alignées qui défile toute seule, s'arrête au survol et se fait glisser à la souris ou au doigt ; Math.dg apparaît lettre par lettre ; un clic sur une affiche ouvre le projet
 - Bandeau défilant des catégories, qui accélère et change de sens avec le défilement
-- Travaux : filtres par catégorie, affiches qui se dévoilent au défilement, colonnes à vitesses différentes, effet de relief et reflet au survol
+- Travaux : filtres par catégorie, affiches qui se dévoilent au défilement, effet de relief et reflet au survol
 - Transition : l'affiche cliquée s'agrandit pour devenir le visuel de la page projet, et revient à sa place au retour (Chrome, Edge, Safari récents ; simple fondu ailleurs)
 - Page projet : halo de la couleur du projet (`couleur` dans `contenu.js`), titre animé, galerie, visionneuse plein écran, grand lien vers le projet suivant, flèches du clavier
 - À propos : le texte s'allume mot par mot en défilant
