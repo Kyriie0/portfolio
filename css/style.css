@@ -220,6 +220,45 @@ html.glisse .r-item { pointer-events: none; }
 
 .contact { position: relative; padding: clamp(5rem, 14vh, 9rem) var(--g) 1.5rem; border-top: 1px solid var(--trait); }
 .ct-intro { font-weight: 400; font-size: clamp(1.15rem, 2vw, 1.6rem); color: var(--texte-2); }
+/* Formulaire de demande */
+.demande { margin-top: clamp(2rem, 5vw, 3.5rem); display: grid; gap: clamp(1.4rem, 3vw, 2rem); max-width: 980px; }
+.d-grille { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(1.2rem, 3vw, 2rem) clamp(1.2rem, 3vw, 2.4rem); }
+.d-champ { display: grid; gap: 0.5rem; }
+.d-champ > span, .d-groupe legend { font-size: 14px; color: var(--texte-2); font-weight: 500; }
+.d-champ em, .d-groupe em { color: var(--accent); font-style: normal; }
+.d-groupe small { font-size: 13px; color: var(--texte-3); margin-left: 0.4rem; }
+.d-champ input, .d-champ textarea {
+  width: 100%; font: inherit; font-size: 17px; color: var(--texte); background: transparent;
+  border: 0; border-bottom: 1px solid var(--trait); border-radius: 0; padding: 0.55rem 0; outline: none;
+  transition: border-color 0.25s;
+}
+.d-champ textarea { resize: vertical; min-height: 3rem; line-height: 1.5; }
+.d-champ input::placeholder, .d-champ textarea::placeholder { color: var(--texte-3); }
+.d-champ input:focus, .d-champ textarea:focus { border-bottom-color: var(--accent); }
+.d-champ.invalide input, .d-champ.invalide textarea { border-bottom-color: #FF6B5E; }
+.d-groupe { border: 0; margin: 0; padding: 0; min-width: 0; }
+.d-groupe legend { padding: 0; margin-bottom: 0.7rem; }
+.d-groupe.invalide legend { color: #FF8A80; }
+.pastilles { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.pastille { position: relative; cursor: pointer; }
+.pastille input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.pastille span { display: inline-block; padding: 0.5rem 0.95rem; border: 1px solid var(--trait); border-radius: 999px; font-size: 14px; color: var(--texte-2); transition: background 0.2s, color 0.2s, border-color 0.2s; }
+.pastille:hover span { border-color: var(--texte-2); color: var(--texte); }
+.pastille input:checked + span { background: var(--texte); color: var(--fond); border-color: var(--texte); }
+.pastille input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+.d-groupe.invalide .pastille span { border-color: rgba(255, 107, 94, 0.6); }
+.d-piege { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.d-bas { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem 1.6rem; }
+.d-bas .bouton:disabled { opacity: 0.6; cursor: default; }
+.d-note { font-size: 13px; color: var(--texte-2); }
+.d-message:empty { display: none; }
+.d-message.erreur { color: #FF8A80; }
+.d-merci { padding: clamp(1.4rem, 3vw, 2rem); border: 1px solid var(--trait); border-radius: 14px; background: var(--fond-2); display: grid; gap: 0.5rem; animation: zoom 0.5s var(--c1); }
+.d-merci-titre { font-size: clamp(1.3rem, 2.4vw, 1.8rem); font-weight: 600; }
+.d-merci p:not(.d-merci-titre) { color: var(--texte-2); }
+.ct-ou { margin-top: clamp(3rem, 7vw, 5rem); font-size: 15px; color: var(--texte-2); }
+.ct-demande { margin-top: 1.4rem; }
+
 .ct-email { display: block; margin-top: clamp(0.8rem, 2vw, 1.6rem); font: 900 10vw/1 var(--display); white-space: nowrap; overflow: hidden; }
 .ct-email > span { display: inline-block; }
 .ct-email .l { display: inline-block; transition: transform 0.5s var(--c1), color 0.3s; transition-delay: calc(var(--i) * 0.014s); }
@@ -366,6 +405,7 @@ button.p-visuel, .g-ouvrir { cursor: zoom-in; }
   .c-titre { font-size: 15px; }
   .c-info { text-align: left; font-size: 13px; }
   .ap-bas { grid-template-columns: 1fr; }
+  .d-grille { grid-template-columns: 1fr; }
   .g-item:is(.demi, .tiers, .centre) { grid-column: 1 / -1; }
   .ps-img { opacity: 0.45; right: -4vw; width: 34vw; }
   .ps-titre { position: relative; z-index: 1; }
