@@ -112,18 +112,20 @@ const PROJETS = [
     "categorie": "Headers",
     "format": "large",
     "role": "En-tête de profil X / Tiktok",
-    "couverture": "images/projets/headers-x-tiktok/cover-tjaf0.jpg",
-    "vignette": "images/projets/headers-x-tiktok/vignette-tjaf0.jpg",
-    "couleur": "#444D8C",
+    "couverture": "images/projets/headers-x-tiktok/cover-191pr.jpg",
+    "vignette": "images/projets/headers-x-tiktok/vignette-191pr.jpg",
+    "couleur": "#504C82",
     "description": [],
     "images": [
       {
-        "src": "images/projets/headers-x-tiktok/presentation-obanaiiguro-mathdg-tr6wj.jpg",
-        "alt": "Headers X / Tiktok"
+        "src": "images/projets/headers-x-tiktok/header-bushi-3000x1000-vbtkc.jpg",
+        "alt": "Headers X ",
+        "legende": "Bushi"
       },
       {
-        "src": "images/projets/headers-x-tiktok/presentation-bushi-mathdg-v6pwj.jpg",
-        "alt": "Headers X / Tiktok"
+        "src": "images/projets/headers-x-tiktok/obanai-iguro-iqlr9.jpg",
+        "alt": "Header X ",
+        "legende": "Obanai Iguro de Demon Slayer"
       }
     ]
   },
