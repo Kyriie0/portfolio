@@ -105,29 +105,20 @@ const CATEGORIES = [
 
 const PROJETS = [
   {
-    "slug": "headers-x-tiktok",
-    "titre": "Headers X / Tiktok",
-    "client": "Particuliers",
+    "slug": "michael-olise",
+    "titre": "Michael Olise",
+    "client": "Personnel",
     "annee": 2026,
-    "categorie": "Headers",
-    "format": "large",
-    "role": "En-tête de profil X / Tiktok",
-    "couverture": "images/projets/headers-x-tiktok/cover-191pr.jpg",
-    "vignette": "images/projets/headers-x-tiktok/vignette-191pr.jpg",
-    "couleur": "#504C82",
-    "description": [],
-    "images": [
-      {
-        "src": "images/projets/headers-x-tiktok/header-bushi-3000x1000-vbtkc.jpg",
-        "alt": "Headers X ",
-        "legende": "Bushi"
-      },
-      {
-        "src": "images/projets/headers-x-tiktok/obanai-iguro-iqlr9.jpg",
-        "alt": "Header X ",
-        "legende": "Obanai Iguro de Demon Slayer"
-      }
-    ]
+    "categorie": "Sport & esport",
+    "format": "portrait",
+    "role": "Affiche ",
+    "couverture": "images/projets/michael-olise/cover-aycpk.jpg",
+    "vignette": "images/projets/michael-olise/vignette-aycpk.jpg",
+    "couleur": "#4D70CC",
+    "description": [
+      "Projet personnel, destiné à promouvoir un match de l'Équipe de France de Football. On y retrouve Michael Olise, un joueur phare de l'équipe nationale et de la scène mondiale. Affiche entièrement réalisé sur Photoshop, dans un style plutôt alternatif, avec de nombreux flous de mouvements."
+    ],
+    "images": []
   },
   {
     "slug": "league-of-legends",
@@ -164,6 +155,40 @@ const PROJETS = [
         "legende": "Les trois affiches en situation."
       }
     ]
+  },
+  {
+    "slug": "sunset-spritz",
+    "titre": "Sunset Spritz",
+    "client": "Hugo Fiard",
+    "annee": "",
+    "categorie": "Affiches",
+    "format": "portrait",
+    "role": "Affiche d’événement",
+    "couverture": "images/projets/sunset-spritz/cover.jpg",
+    "vignette": "images/projets/sunset-spritz/vignette.jpg",
+    "couleur": "#D86435",
+    "description": [
+      "Affiche promotionnelle pour un DJ set de Hugo Fiard, DJ clermontois, au Grand Mess à Clermont-Ferrand.",
+      "Le titre mélange deux typographies, une condensée orange et une manuscrite verte, posées sur une photo du DJ aux platines. Les couleurs rappellent le spritz et l’ambiance d’une fin de journée en terrasse."
+    ],
+    "images": []
+  },
+  {
+    "slug": "jeremy-jacquet",
+    "titre": "Jérémy Jacquet",
+    "client": "",
+    "annee": "",
+    "categorie": "Sport & esport",
+    "format": "portrait",
+    "role": "Affiche",
+    "couverture": "images/projets/jeremy-jacquet/cover.jpg",
+    "vignette": "images/projets/jeremy-jacquet/vignette.jpg",
+    "couleur": "#0167E3",
+    "description": [
+      "Affiche pour mettre en avant la première sélection de Jérémy Jacquet en équipe de France.",
+      "Le joueur se détache sur une silhouette remplie de supporters, entourée de motifs dessinés. Le bleu et l’or reprennent les couleurs de la sélection, avec son nom à la verticale sur le côté."
+    ],
+    "images": []
   },
   {
     "slug": "soma-aubrilam",
@@ -246,6 +271,31 @@ const PROJETS = [
     ]
   },
   {
+    "slug": "headers-x-tiktok",
+    "titre": "Headers X / Tiktok",
+    "client": "Particuliers",
+    "annee": 2026,
+    "categorie": "Headers",
+    "format": "large",
+    "role": "En-tête de profil X / Tiktok",
+    "couverture": "images/projets/headers-x-tiktok/cover-191pr.jpg",
+    "vignette": "images/projets/headers-x-tiktok/vignette-191pr.jpg",
+    "couleur": "#504C82",
+    "description": [],
+    "images": [
+      {
+        "src": "images/projets/headers-x-tiktok/header-bushi-3000x1000-vbtkc.jpg",
+        "alt": "Headers X ",
+        "legende": "Bushi"
+      },
+      {
+        "src": "images/projets/headers-x-tiktok/obanai-iguro-iqlr9.jpg",
+        "alt": "Header X ",
+        "legende": "Obanai Iguro de Demon Slayer"
+      }
+    ]
+  },
+  {
     "slug": "kaatsup",
     "titre": "Kaatsup",
     "client": "",
@@ -302,23 +352,6 @@ const PROJETS = [
     ]
   },
   {
-    "slug": "jeremy-jacquet",
-    "titre": "Jérémy Jacquet",
-    "client": "",
-    "annee": "",
-    "categorie": "Sport & esport",
-    "format": "portrait",
-    "role": "Affiche",
-    "couverture": "images/projets/jeremy-jacquet/cover.jpg",
-    "vignette": "images/projets/jeremy-jacquet/vignette.jpg",
-    "couleur": "#0167E3",
-    "description": [
-      "Affiche pour mettre en avant la première sélection de Jérémy Jacquet en équipe de France.",
-      "Le joueur se détache sur une silhouette remplie de supporters, entourée de motifs dessinés. Le bleu et l’or reprennent les couleurs de la sélection, avec son nom à la verticale sur le côté."
-    ],
-    "images": []
-  },
-  {
     "slug": "auverniaks",
     "titre": "Auver’Niaks",
     "client": "Projet scolaire",
@@ -339,23 +372,6 @@ const PROJETS = [
         "alt": "Maillot Auver’Niaks, face et dos"
       }
     ]
-  },
-  {
-    "slug": "sunset-spritz",
-    "titre": "Sunset Spritz",
-    "client": "Hugo Fiard",
-    "annee": "",
-    "categorie": "Affiches",
-    "format": "portrait",
-    "role": "Affiche d’événement",
-    "couverture": "images/projets/sunset-spritz/cover.jpg",
-    "vignette": "images/projets/sunset-spritz/vignette.jpg",
-    "couleur": "#D86435",
-    "description": [
-      "Affiche promotionnelle pour un DJ set de Hugo Fiard, DJ clermontois, au Grand Mess à Clermont-Ferrand.",
-      "Le titre mélange deux typographies, une condensée orange et une manuscrite verte, posées sur une photo du DJ aux platines. Les couleurs rappellent le spritz et l’ambiance d’une fin de journée en terrasse."
-    ],
-    "images": []
   },
   {
     "slug": "saturn",
